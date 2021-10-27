@@ -51,3 +51,12 @@ function getRandomSymbol(){
 
 //Example of the getRandomSymbol function
 console.log(getRandomSymbol());//Random symbol from the "symbols" string
+
+//Objects to store all the character generator functions
+const randomFunctions = {
+    lower: getRandomLower, 
+    upper: getRandomUpper, 
+    number: getRandomNumber, 
+    symbol: getRandomSymbol, 
+};
+
