@@ -107,18 +107,27 @@ typesArr = typesArr.filter(item => {
     return item[1];
 });
 
-    //3. LOOP OVER THE LENGTH AND CALL THE GENERATOR FUNCTION FOR EACH CHECKED OPTION
-
-//Building password with a for loop
-//
-for (i = 0; i < length; 1 += typesCount){
-    
-}
-
+// 3. LOOP OVER THE LENGTH AND CALL THE GENERATOR FUNCTION FOR EACH CHECKED OPTION
+  // Building password with a for loop
+  // NOTE: The value for "length" is the value selected for the length number input
+  for (i = 0; i < length; i += typesCount){
+    // One of the items in the updated/filtered version of the typesArr will be the value/argument passed into for the type parameter each time the anonymous arrow function is run/executed
+    typesArr.forEach(type => {
+      const funcName = type[0];
+      console.log(funcName);
+      // Accessing and running/executing a function in the randomFunctions object. Also, concatenating/adding the value returned from the accessed function to the generatedPassword string variable
+      generatedPassword += randomFunctions[funcName]();
+      console.log(generatedPassword);
+    });
+  }
 
 
     //4. ADD THE GENERATED PASSWORD TO THE FINAL VARIABLE AND RETURN IT FROM THE FUNCTION
+  // Removing extra characters if necessary (The above loop will create a password that may not match the length selected if that length is not a multiple of the number of options/checkboxes selected)
+  const finalPassword = generatedPassword.slice(0, length);
+  console.log(finalPassword);
 
+  return finalPassword;
 }
 
 //Example of generatePassword function
@@ -126,3 +135,22 @@ for (i = 0; i < length; 1 += typesCount){
 //below is saying all the boxes are checked and 10 is set for length. This is an example of when the page first loads
 generatePassword(true, true, true, true, 10)
 
+// Event listener for when the "Generate Password" button is clicked
+generateEl.addEventListener(`click`, () => {
+    // Checking if the following options/checkboxes are selected/checked and setting the true or false values to the respective variables
+    const hasLower = lowercaseEl.checked;
+    const hasUpper = uppercaseEl.checked;
+    const hasNumber = numbersEl.checked;
+    const hasSymbol = symbolsEl.checked;
+    
+    // Accessing the value for the number input and changing the value from a string to a number
+    // NOTE: The value returned from a number input is a string value
+    const length = parseInt(lengthEl.value);
+  
+    console.log(hasLower, hasUpper, hasNumber, hasSymbol, length);
+
+    //The generatePassword function takes the true/false values determined by the checkboxes as well as the number from the number input as arguments and returns a string (AKA The Password) which is set as the innerText value for the "result" (AKA Span) element
+    resultEl.innerText = generatePassword(hasLower, hasUpper, hasNumber, hasSymbol, length);
+  });
+
+  
